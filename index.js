@@ -1,5 +1,7 @@
 // TODO: Include packages needed for this application
 const inquirer = require('inquirer');
+const fs = require('fs');
+const generateMarkdown = require('./utils/generateMarkdown');
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -91,7 +93,8 @@ const questions = [
                 "Apache License 2.0",
                 "GNU GPLv3",
                 "Boost Software License 1.0",
-                "Mozilla Public License 2.0"],
+                "Mozilla Public License 2.0",
+                "None"],
         validate : (inputLicense) => {
             if(!inputLicense){
                 console.log("Please select a license")
@@ -138,23 +141,37 @@ const  promptUser = () =>{
 }
 
 const sampleResponse = () => {
-    obj =  {
-        usernameData: 'nylesor28',
-        emailData: 'rdorsainvil28@gmail.com',
-        projectNameData: 'readme generator',
-        projectDescriptionData: 'creates a quality readme file',
-        installInstructionsData: '1. run npm i 2. run node index',
-        usageData: 'answer the prompts see readme file in dist folder',
-        licenseData: 'MIT',
-        contributorsData: 'nylesor28',
-        testData: 'n/a'
+   return obj =  {
+        usernameData: "nylesor28",
+        emailData: "rdorsainvil28@gmail.com",
+        projectNameData: "readme generator",
+        projectDescriptionData: "creates a quality readme file",
+        installInstructionsData: "1. run npm i 2. run node index",
+        usageData: "answer the prompts see readme file in dist folder",
+        licenseData: "MIT",
+        contributorsData: "nylesor28",
+        testData: "n/a"
       }
     
-      console.log(obj)
+      //console.log(obj)
 }
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+function writeToFile(fileName, data) {
+    return new Promise((resolve, reject) => {
+   
+        fs.writeFile(fileName, data, err => {
+            if (err){
+                reject(err);
+                return;
+            }
+            resolve({
+                ok: true,
+                message: 'File Created!'
+            })
+        })
+    });
+}
 
 // TODO: Create a function to initialize app
 function init() {
@@ -162,8 +179,11 @@ function init() {
     
     promptUser()
     .then((readmeData) => {
-        console.log (readmeData)
-    })
+        return generateMarkdown(readmeData);
+      })
+      .then((markdown) => {
+        return writeToFile('./dist/generatedREADME.md',markdown)
+      })
     .catch((err) => {
         console.log(err);
       })
