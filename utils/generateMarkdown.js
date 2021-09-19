@@ -82,8 +82,9 @@ function renderLicenseLink(license) {
       licenseLink = "https://choosealicense.com/licenses/gpl-3.0/";
 
    }
-      else 
+      else {
       licenseLink = "";
+      }
   return licenseLink;
 }
 
@@ -92,16 +93,16 @@ function renderLicenseLink(license) {
 function renderLicenseSection(license) {
  
   let licenseSection = `
-  ## License
+ ## License
   `
 
   let licenseText = ""
   if(license ){
     licenseText = ` ${renderLicenseBadge(license)}
-    ${(renderLicenseLink(license))}`
+    (${(renderLicenseLink(license))})`
   } 
   
-  if(licenseText) {
+  if(!licenseText) {
     licenseText =`This  project is currently unlicensed `
   }
   licenseSection += licenseText

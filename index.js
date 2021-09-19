@@ -140,21 +140,6 @@ const  promptUser = () =>{
     return inquirer.prompt(questions)
 }
 
-const sampleResponse = () => {
-   return obj =  {
-        usernameData: "nylesor28",
-        emailData: "rdorsainvil28@gmail.com",
-        projectNameData: "readme generator",
-        projectDescriptionData: "creates a quality readme file",
-        installInstructionsData: "1. run npm i 2. run node index",
-        usageData: "answer the prompts see readme file in dist folder",
-        licenseData: "MIT",
-        contributorsData: "nylesor28",
-        testData: "n/a"
-      }
-    
-      //console.log(obj)
-}
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
